@@ -1,0 +1,267 @@
+================================================================================
+   AUTO INVOICE GENERATOR FOR TRUSTS & NGOs
+   STEP-BY-STEP SETUP GUIDE
+   (Google Apps Script — No Python / No Server Required)
+================================================================================
+
+WHAT YOU NEED:
+  - A Google Account (Gmail)
+  - A web browser (Chrome recommended)
+  - The two JavaScript files in the "Java Scripts" folder:
+      1. create_google_form.js
+      2. google_apps_script.js
+
+That's it. No software installation. No coding knowledge required.
+
+================================================================================
+OVERVIEW OF HOW IT WORKS
+================================================================================
+
+  STEP 1: Run create_google_form.js
+           → Creates your Google Form + Google Sheet automatically
+
+  STEP 2: Fill in your Organization details in the Settings tab of the Sheet
+
+  STEP 3: Paste google_apps_script.js into the same Sheet and run setupAllTriggers
+           → This activates the automation
+
+  STEP 4: Share your Google Form link with contributors
+
+  STEP 5: When a contributor submits the form, Admin receives an email alert
+           → Open the Sheet, change their status to "Approved"
+           → Invoice PDF is automatically generated and emailed to the contributor
+
+================================================================================
+PART 1 — CREATE YOUR GOOGLE FORM AND SHEET
+           (Using: create_google_form.js)
+================================================================================
+
+STEP 1: Open the Google Apps Script Editor
+   a. Open your browser and go to:  https://script.new
+   b. A blank "Apps Script" editor will open.
+   c. Sign in with your Google Account if prompted.
+
+STEP 2: Paste the Script
+   a. Open the file "Java Scripts\create_google_form.js" from this folder
+      using Notepad or any text editor.
+   b. Select ALL the text (Ctrl + A) and Copy it (Ctrl + C).
+   c. In the browser (Apps Script editor):
+      - Delete any existing default code shown.
+      - Paste the copied code (Ctrl + V).
+   d. Click the Save button (or press Ctrl + S).
+      Give the project any name, e.g., "Create Form".
+
+STEP 3: (Optional) Customize Your Organization Details in the Script
+   At the top of the pasted code, you will see a section called TEMPLATE_CONFIG.
+   You can fill in your details here, OR skip this step — you can also fill them
+   directly in the Google Sheet's Settings tab after the form is created.
+
+   If you want to edit here, change these lines:
+     organizationName: "[YOUR_ORGANIZATION_OR_TRUST_NAME]"
+       → Example: organizationName: "Sri Venkateshwara Trust"
+
+     tagline: "[YOUR_ORGANIZATION_TAGLINE_OR_MISSION]"
+       → Example: tagline: "Serving Humanity Since 1998"
+
+     registrationOrPan: "REG: [YOUR_REG_NO] | PAN: [YOUR_PAN_NO]"
+       → Example: registrationOrPan: "REG: 12345/2001 | PAN: AABCT1234D"
+
+     address: "[YOUR_REGISTERED_OFFICE_ADDRESS]"
+       → Example: address: "123, Gandhi Road, Chennai - 600001"
+
+     contactPhone: "+91 [YOUR_CONTACT_PHONE_NUMBER]"
+       → Example: contactPhone: "+91 98765 43210"
+
+     invoicePrefix: "REC-2026-"
+       → Change the year if needed, e.g., "REC-2027-"
+
+   NOTE: If you skip this, fill in the details later in the Sheet's Settings tab.
+
+STEP 4: Run the Script
+   a. In the toolbar at the top of the Apps Script editor, make sure the
+      function dropdown shows "createContributionForm".
+   b. Click the ▶ Run button.
+   c. A permissions popup will appear — click "Review permissions",
+      choose your Google Account, then click "Allow".
+      (This allows the script to create a Form and Sheet in your Drive.)
+   d. The script will run for about 5-10 seconds.
+
+STEP 5: Get Your Form and Sheet URLs
+   a. At the bottom of the Apps Script editor, click "Execution log".
+   b. You will see three URLs printed:
+       1. Public Form URL   → Share this with your contributors
+       2. Form Edit URL     → Use this to edit the form questions
+       3. Linked Sheet URL  → Open this to see all responses
+   c. Copy and save these URLs somewhere safe.
+
+   ✅ Your Google Form and Google Sheet are now ready!
+
+================================================================================
+PART 2 — SET UP YOUR AUTOMATION
+            (Using: google_apps_script.js)
+================================================================================
+
+STEP 6: Open Your Google Sheet
+   a. Click on the "Linked Sheet URL" you copied in Step 5.
+      (Or open it from Google Drive — it will be named
+       "Contribution Form Responses & Invoices")
+
+STEP 7: Open the Apps Script Editor for the Sheet
+   a. Inside the Google Sheet, click the menu: Extensions > Apps Script
+   b. A new Apps Script editor tab will open.
+   c. This editor is now BOUND to your Sheet (this is important).
+
+STEP 8: Paste the Automation Script
+   a. Open the file "Java Scripts\google_apps_script.js" from this folder
+      using Notepad or any text editor.
+   b. Select ALL the text (Ctrl + A) and Copy it (Ctrl + C).
+   c. In the Apps Script editor (from Step 7):
+      - Delete any existing default code.
+      - Paste the copied code (Ctrl + V).
+   d. Click Save (Ctrl + S). Name the project, e.g., "Invoice Automation".
+
+STEP 9: Run the Setup Function (ONE TIME ONLY)
+   a. In the function dropdown at the top, select "setupAllTriggers".
+   b. Click the ▶ Run button.
+   c. A permissions popup will appear — click "Review permissions",
+      choose your Google Account, then click "Allow".
+      (This allows the script to send emails, read the Sheet, and monitor edits.)
+   d. After a few seconds, a SUCCESS popup will appear in your Sheet saying:
+      "Automated triggers are now active."
+
+   ✅ The automation is now installed and active!
+
+STEP 10: Fill In Your Organization Details in the Sheet
+   a. Go back to your Google Sheet.
+   b. You will now see a new tab called "⚙️ Settings" at the bottom.
+   c. Click on the "⚙️ Settings" tab.
+   d. Fill in Column B (Your Custom Value) for each row:
+
+      | Configuration Parameter        | Your Custom Value (Edit this column)         |
+      |-------------------------------|----------------------------------------------|
+      | Organization / Trust Name      | Sri Venkateshwara Trust (example)            |
+      | Tagline / Mission              | Serving Humanity Since 1998 (example)        |
+      | Reg. Number / PAN              | REG: 12345/2001 | PAN: AABCT1234D (example) |
+      | Address                        | 123, Gandhi Road, Chennai - 600001 (example) |
+      | Contact Phone                  | +91 98765 43210 (example)                    |
+      | Admin Email (Receives Alerts)  | youremail@gmail.com  ← IMPORTANT             |
+      | Invoice Prefix                 | REC-2026- (or REC-2027-, INV-, DON-, etc.)   |
+      | Currency Code                  | INR (or USD, EUR, GBP, etc.)                 |
+      | Currency Symbol                | ₹ (or $, €, £, etc.)                         |
+      | Tax Exemption Note             | Your tax benefit disclaimer text             |
+
+   IMPORTANT: The "Admin Email" is the email address that will:
+     - Receive an instant alert every time a contributor submits the form
+     - Receive an audit copy of every invoice that is sent
+
+   ✅ All your organization details are now configured!
+
+================================================================================
+PART 3 — USING THE SYSTEM (DAY-TO-DAY)
+================================================================================
+
+STEP 11: Share the Form with Contributors
+   a. Use the "Public Form URL" from Step 5.
+   b. Share it via WhatsApp, Email, Website, or QR Code.
+   c. Contributors fill in their name, email, address, phone,
+      amount, payment mode, and payment screenshot link.
+
+STEP 12: When a Contributor Submits the Form
+   a. The response automatically appears in your Google Sheet
+      under the "Form Responses 1" tab.
+   b. The "Approval Status" is automatically set to "Pending".
+   c. The Admin Email receives an instant alert email with:
+      - Contributor's name, amount, payment mode, screenshot link.
+
+STEP 13: Verifying and Approving a Contribution
+   a. Open your Google Sheet.
+   b. Check the contributor's row — verify their payment details.
+   c. In the "Approval Status" column (dropdown), change "Pending" to:
+      → "Approved"  — to generate and email the invoice
+      → "Rejected"  — to reject (no invoice is sent)
+
+STEP 14: What Happens When You Click "Approved"
+   a. The script automatically:
+      1. Assigns a unique Invoice Number (e.g., REC-2026-0001)
+      2. Generates a professional PDF invoice with:
+         - Your organization name, logo area, address, and registration
+         - Contributor's full details
+         - Amount, payment mode, and date
+         - Tax exemption note
+         - Authorized signatory section
+      3. Sends the PDF to the CONTRIBUTOR's email with a thank-you message.
+      4. Sends an ADMIN AUDIT COPY to your admin email.
+      5. Updates the row in the Sheet with "Sent" status and timestamp.
+
+   b. A green toast notification appears in your Sheet:
+      "✅ Invoice REC-2026-0001 sent to email@example.com!"
+
+   ✅ The invoice is delivered — no manual work needed!
+
+================================================================================
+PART 4 — IMPORTANT NOTES & TIPS
+================================================================================
+
+TIP 1: Safe from Duplicate Invoices
+   If you accidentally click "Approved" twice on the same row,
+   the system will show a notice "Invoice was already sent" and
+   will NOT send a duplicate. You are protected.
+
+TIP 2: Customize the Invoice Description
+   The PDF invoice currently says:
+   "Voluntary Contribution towards Educational & Welfare Initiatives"
+   To change this, open google_apps_script.js, find that text
+   in the "buildCustomInvoiceHtml" function, and update it.
+
+TIP 3: Change Your Organization Details Anytime
+   Simply open the Google Sheet > "⚙️ Settings" tab and update Column B.
+   Changes take effect immediately — no need to re-run any scripts.
+
+TIP 4: Change the Invoice Number Prefix
+   In the "⚙️ Settings" tab, change "Invoice Prefix" in Column B.
+   e.g., change "REC-2026-" to "REC-2027-" for a new year.
+
+TIP 5: Multiple Users Can Share the Same Sheet
+   You can share the Google Sheet with other team members.
+   Any team member who has edit access can approve contributions.
+
+TIP 6: The Form Can Be Embedded on Your Website
+   In Google Forms, click the Send button, then click the < > (Embed) icon
+   to get an HTML embed code for your website.
+
+TIP 7: If You Do Not Receive Emails
+   - Check the Admin Email value in the "⚙️ Settings" tab.
+   - Check your Spam folder.
+   - Make sure you granted all permissions when prompted (Step 4c and 9c).
+   - In the Apps Script editor, go to Triggers (clock icon) to verify
+     that two triggers exist: onApprovalEditTrigger and onFormSubmitTrigger.
+
+TIP 8: To Add More Form Questions
+   - Use the "Form Edit URL" from Step 5 to open the Form editor.
+   - Add new questions as needed.
+   - The script reads column headers by keyword — it will still work.
+
+================================================================================
+PART 5 — QUICK REFERENCE CHECKLIST
+================================================================================
+
+FIRST-TIME SETUP:
+  [ ] Go to https://script.new and paste create_google_form.js → Run
+  [ ] Save the Form URL, Form Edit URL, and Sheet URL from the Execution Log
+  [ ] Open the Sheet → Extensions > Apps Script
+  [ ] Paste google_apps_script.js → Save → Run "setupAllTriggers" → Allow Permissions
+  [ ] Go to "⚙️ Settings" tab → Fill in your organization details in Column B
+  [ ] Share the Form URL with contributors
+
+DAILY USE:
+  [ ] Check your Admin Email for new contribution alerts
+  [ ] Open Google Sheet → Review contributor's payment details
+  [ ] Change "Approval Status" to "Approved"
+  [ ] Invoice is auto-generated and emailed — done!
+
+
+================================================================================
+   END OF GUIDE
+   This project is free to use and customize for any Trust, NGO, School,
+   or Non-Profit Organization. No license fees. No subscriptions.
+================================================================================
